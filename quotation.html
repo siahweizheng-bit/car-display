@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CarDisplay.my｜车行网站方案</title>
+  <style>
+    :root{--ink:#101411;--green:#143f31;--lime:#ccff4d;--paper:#f4f2ec;--line:#d7d8d1}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,"Noto Sans SC",sans-serif}
+    main{max-width:1040px;margin:auto;padding:60px 24px}.brand{font-size:26px;font-weight:800}.brand:before{content:"◆";font-size:10px;color:#b87942;margin-right:9px}
+    .hero{padding:80px 0 54px;border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;letter-spacing:2px;color:var(--green);font-weight:800}
+    .hero h1{font-family:Georgia,serif;font-size:clamp(42px,7vw,76px);font-weight:500;line-height:1;margin:16px 0 22px;max-width:850px}.hero p{font-size:18px;line-height:1.7;max-width:680px;color:#58615c}
+    .plans{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:46px 0}.plan{background:#fff;border:1px solid var(--line);padding:34px}.plan.featured{background:var(--green);color:white}
+    .plan small{letter-spacing:1.5px}.plan h2{font-size:30px;margin:12px 0}.price{font-size:40px;font-weight:800;margin:26px 0 4px}.monthly{color:#6b746f}.featured .monthly{color:#d7e2dd}
+    .plan ul{list-style:none;padding:18px 0;margin:20px 0;border-top:1px solid #9994}.plan li{padding:8px 0}.plan li:before{content:"✓";color:#74a32d;font-weight:bold;margin-right:10px}.featured li:before{color:var(--lime)}
+    .terms{background:#fff;border-left:6px solid var(--lime);padding:28px;margin-top:10px}.terms h2{margin-top:0}.terms p{line-height:1.65}
+    .cta{margin-top:36px;background:#111;color:white;padding:26px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px}.cta a{background:var(--lime);color:#111;padding:14px 20px;text-decoration:none;font-weight:800}
+    @media(max-width:700px){main{padding:34px 18px}.hero{padding:48px 0}.plans{grid-template-columns:1fr}.cta{align-items:flex-start;flex-direction:column}}
+    @media print{body{background:#fff}.cta{display:none}main{padding:20px}.plans{break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">CarDisplay.my</div>
+    <section class="hero">
+      <p class="eyebrow">INDEPENDENT DIGITAL SHOWROOM</p>
+      <h1>让顾客先看懂车辆，<br>再联系销售员。</h1>
+      <p>专为马来西亚二手车行设计的独立展示网站。集中展示库存、价格、里程、车况和验车报告，并把有兴趣的顾客带到 WhatsApp。</p>
+    </section>
+    <section class="plans">
+      <article class="plan">
+        <small>方案 A｜DIGITAL SHOWROOM</small><h2>独立车辆展示站</h2>
+        <div class="price">RM 1,288</div><div class="monthly">建站费＋RM 200／月维护</div>
+        <ul><li>手机及电脑展示网站</li><li>中英文切换</li><li>车辆搜索与条件筛选</li><li>车况、照片及验车报告</li><li>WhatsApp、Facebook、Instagram</li><li>车辆资料管理</li></ul>
+      </article>
+      <article class="plan featured">
+        <small>方案 B｜SHOWROOM + SYSTEM</small><h2>展示站＋销售系统</h2>
+        <div class="price">RM 2,488</div><div class="monthly">建站费＋RM 388／月维护</div>
+        <ul><li>包含方案 A 所有功能</li><li>客户询盘和跟进时间线</li><li>试驾、看车及拿车预约日历</li><li>销售员分配与独立 PIN</li><li>成交、佣金与月度薪资</li><li>Google Sheet 资料同步</li></ul>
+      </article>
+    </section>
+    <section class="terms">
+      <h2>首批合作车行优惠</h2>
+      <p><strong>展示站优惠建站费 RM588；系统版优惠建站费 RM988。</strong>月费分别为 RM200／月和 RM388／月，并从网站上线满30天后开始。优惠限首3家或14天内确认的合作车行（以先达到者为准），并需允许 CarDisplay.my 展示完成作品及收集使用评价。</p>
+      <p>优惠包含免费代录首10辆车。项目确认后支付建站费50%订金，完成验收后支付余款。域名、额外资料录入、广告投放及约定范围以外功能另行报价。</p>
+    </section>
+    <div class="cta"><div><strong>先体验，再决定。</strong><br><small>所有方案均会按车行品牌、车辆和工作流程定制。</small></div><a href="https://cardisplay.my">体验 DEMO ↗</a></div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>CarDisplay.my｜DEMO 验车报告</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <style>
+    :root{font-family:Inter,"Noto Sans SC","Segoe UI",Arial,sans-serif;color:#17201c;background:#eef0eb}*{box-sizing:border-box}body{margin:0;padding:38px 18px}.report{max-width:900px;margin:auto;background:#fff;padding:46px;border:1px solid #d8ddd7}.report header{display:flex;justify-content:space-between;gap:25px;border-bottom:3px solid #17201c;padding-bottom:24px}.eyebrow{margin:0;color:#174a36;font-size:10px;font-weight:800;letter-spacing:2px}.report h1{font-family:Georgia,"Noto Serif SC",serif;font-size:34px;margin:8px 0}.report-meta{font-size:11px;color:#69736e}.score{width:100px;height:100px;border-radius:50%;background:#d9ff58;display:grid;place-content:center;text-align:center;font-size:28px;font-weight:800;flex:0 0 100px}.score small{font-size:10px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:30px 0}.summary div,.check{background:#f4f3ee;padding:16px}.summary small,.check small{display:block;color:#69736e;margin-bottom:5px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ok{color:#174a36}.note{margin-top:25px;padding:18px;border-left:4px solid #d9ff58;background:#fafbf6;line-height:1.6}.report-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.report-actions a,.report-actions button{min-height:44px;display:inline-flex;align-items:center;border:0;background:transparent;color:#174a36;font-weight:750;cursor:pointer}@media(max-width:600px){body{padding:16px 10px}.report{padding:24px 17px}.summary,.checks{grid-template-columns:1fr 1fr}.report h1{font-size:25px}.score{width:76px;height:76px;flex-basis:76px;font-size:23px}.summary div,.check{padding:12px;font-size:12px}}
+  </style>
+</head>
+<body>
+  <div class="report-actions"><a href="index.html">← <span id="backLabel">返回车辆</span></a><button id="reportLang" type="button">EN</button></div>
+  <main class="report" id="report"></main>
+  <script src="data.js?v=20260811-1"></script>
+  <script src="inspection-report.js?v=20260811-1"></script>
+</body>
+</html>

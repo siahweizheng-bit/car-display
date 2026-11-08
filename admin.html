@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="CarDisplay.my 车行销售系统 DEMO 后台">
+  <title>CarDisplay.my｜车行后台 DEMO</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css?v=20260813-1">
+</head>
+<body class="admin-body locked">
+  <main class="pin-gate" id="pinGate">
+    <form id="pinForm" class="pin-card">
+      <a class="brand" href="index.html">DEMO<span>DEALER ADMIN</span></a>
+      <div class="pin-icon">⌁</div>
+      <p class="eyebrow">PRIVATE CONTROL CENTRE</p>
+      <h1>进入车行后台</h1>
+      <p>请输入你的 6 位 PIN<br><small>Enter your personal 6-digit PIN</small></p>
+      <label><span>LOGIN PIN</span><div class="pin-input-wrap"><input id="pinInput" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code" placeholder="••••••" required><button type="button" class="pin-visibility" data-toggle-pin="pinInput" aria-label="显示 PIN" title="显示 PIN"><span class="eye-icon"></span></button></div></label>
+      <button class="button" type="submit">进入后台 / Enter</button>
+      <div class="pin-message" id="pinMessage"></div>
+      <div class="pin-secondary-actions">
+        <button class="pin-reset" id="resetPin" type="button"><span>?</span><b>忘记 PIN？</b><small>重置 DEMO 密码为 000000</small></button>
+        <a class="back-site" href="index.html"><span>←</span><b>返回展示网站</b></a>
+      </div>
+    </form>
+  </main>
+  <aside class="sidebar">
+    <a class="brand light" href="index.html">DEMO<span>ADMIN</span></a>
+    <nav>
+      <button class="side-link active" data-view="vehicles">▦ <span data-i18n="vehicles">车辆管理</span></button>
+      <button class="side-link" data-view="leads">◎ <span data-i18n="leads">客户询盘</span></button>
+      <button class="side-link" data-view="staff">◇ <span data-i18n="staff">员工管理</span></button>
+      <button class="side-link" data-view="settings">⚙ <span data-i18n="settings">系统设置</span></button>
+      <a class="side-link" href="index.html">↗ <span data-i18n="viewSite">查看网站</span></a>
+    </nav>
+    <div class="sidebar-bottom"><button class="side-link" id="logoutAdmin">⇥ <span data-i18n="logout">退出后台</span></button><button class="side-link" id="resetDemo">↻ <span data-i18n="reset">重置演示资料</span></button></div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div><p class="eyebrow">DEMO CONTROL CENTRE</p><h1 id="viewTitle">车辆管理</h1></div>
+      <div class="admin-user-actions"><div class="admin-greeting"><span id="adminGreeting">Hi, Owner</span><small id="adminRole">Owner</small></div><button class="ghost" id="adminLangBtn">EN</button></div>
+    </header>
+    <div class="demo-banner"><b data-i18n="sandbox">体验模式：你的修改只保存在当前装置，不会影响其他访客。</b><span data-i18n="sheetPromise">正式客户版会连接该车行独立的 Google Sheet。</span></div>
+    <div class="admin-toast" id="adminToast" role="status" aria-live="polite"></div>
+
+    <section id="vehiclesView">
+      <div class="feature-plan-marker plan-a"><b data-i18n="showroomFeature">方案 A · 展示站功能</b><span data-i18n="showroomFeatureHelp">库存、车况、多图、报告与展示内容管理</span></div>
+      <div class="stats" id="stats"></div>
+      <div class="panel">
+        <div class="panel-head"><div><h2 data-i18n="inventory">库存</h2><p data-i18n="inventoryHelp">点击车辆即可编辑车况与状态</p></div><button class="button" id="addCar" data-i18n="addCar">＋ 新增车辆</button></div>
+        <div class="table-wrap"><table><thead><tr><th data-i18n="vehicle">车辆</th><th data-i18n="price">价格</th><th data-i18n="vehicleOwner">负责销售员</th><th data-i18n="transparency">透明等级</th><th data-i18n="status">状态</th><th></th></tr></thead><tbody id="vehicleRows"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="leadsView" class="hidden">
+      <div class="feature-plan-marker plan-b"><b data-i18n="leadSystemFeature">方案 B · 系统版功能</b><span data-i18n="leadSystemFeatureHelp">询盘、跟进、分配、预约与成交管理</span></div>
+      <div id="leadOps" class="lead-ops"></div>
+      <div class="appointment-strip"><div><p class="eyebrow">APPOINTMENTS</p><h2 data-i18n="upcomingAppointments">预约看板</h2></div><div class="appointment-legend" id="appointmentLegend"></div></div>
+      <div class="calendar-panel"><header><button class="ghost" id="calendarPrev" type="button">←</button><h3 id="calendarTitle"></h3><button class="ghost" id="calendarNext" type="button">→</button></header><div class="calendar-week" id="calendarWeek"></div><div class="calendar-grid" id="appointmentCalendar"></div></div>
+      <div id="appointmentCards" class="appointment-board"></div>
+      <div class="lead-filter-row"><div class="lead-filterbar" id="leadFilterbar"><button class="active" data-lead-filter="active">进行中</button><button data-lead-filter="won">已成交</button><button data-lead-filter="lost">未成交</button><button data-lead-filter="archived">已封存</button></div><button class="button" id="addLead">＋ 新增询盘</button></div>
+      <div class="lead-workspace">
+        <div class="panel lead-list-panel"><div class="panel-head"><div><h2 data-i18n="leads">客户询盘</h2><p data-i18n="leadHelp">选择客户查看完整跟进记录</p></div></div><div id="leadRows" class="lead-list"></div></div>
+        <div class="panel lead-detail" id="leadDetail"><div class="empty-lead"><b>◎</b><span data-i18n="selectLead">选择一个询盘查看时间线</span></div></div>
+      </div>
+    </section>
+    <section id="staffView" class="hidden">
+      <div id="staffStats" class="staff-stats"></div>
+      <div class="system-feature-note"><b data-i18n="systemFeature">方案 B · 系统版功能</b><span data-i18n="systemFeatureHelp">先体验询盘与预约；员工、佣金和薪资属于系统版进阶功能。</span></div><div class="panel"><div class="panel-head"><div><p class="eyebrow">SALES TEAM</p><h2 id="staffSectionTitle">员工、佣金与薪资</h2><p id="staffSectionHelp">管理基本资料、成交表现和个别薪资规则</p></div><button class="button" id="addStaff">＋ 新增员工</button></div><div class="staff-grid" id="staffGrid"></div></div><div class="panel payroll-panel"><div class="panel-head"><div><p class="eyebrow">MONTHLY PAYROLL</p><h2 id="payrollTitle">月度薪资</h2><p id="payrollHelp">底薪＋当月佣金＋津贴－扣款</p></div><div class="payroll-actions"><input id="payrollMonth" type="month"><button class="button" id="generatePayroll">生成本月薪资</button></div></div><div class="table-wrap"><table><thead id="payrollHead"></thead><tbody id="payrollRows"></tbody></table></div></div>
+    </section>
+    <section id="settingsView" class="hidden">
+      <div class="panel settings-panel">
+        <div class="panel-head"><div><h2 data-i18n="settings">系统设置</h2></div></div>
+        <form id="settingsForm" class="settings-form">
+          <details class="advanced-settings"><summary data-i18n="connectionSettings">正式客户数据连接</summary>
+          <label><span data-i18n="scriptUrl">Apps Script Web App URL</span><input name="scriptUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec"></label>
+          <label><span data-i18n="adminToken">数据连接密钥</span><div class="pin-input-wrap"><input id="adminTokenInput" name="adminToken" type="password" placeholder="由系统设置产生"><button type="button" class="pin-visibility" data-toggle-pin="adminTokenInput" data-secret-kind="key" aria-label="显示密钥" title="显示密钥"><span class="eye-icon"></span></button></div></label>
+          </details>
+          <label><span>后台 6 位 PIN</span><div class="pin-input-wrap"><input id="adminPinSettingInput" name="adminPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="000000"><button type="button" class="pin-visibility" data-toggle-pin="adminPinSettingInput" aria-label="显示 PIN" title="显示 PIN"><span class="eye-icon"></span></button></div></label>
+          <label><span data-i18n="dealerWhatsapp">车商 WhatsApp 号码</span><input name="dealerWhatsapp" placeholder="60123456789"></label>
+          <label><span data-i18n="salesWhatsapp">Zach 销售 WhatsApp（config.js）</span><input name="salesWhatsapp" readonly></label>
+          <label><span data-i18n="dealerSloganLabel">车行 Slogan</span><input name="dealerSlogan" placeholder="每一辆车，都经得起你细看。"></label>
+          <label><span data-i18n="dealerSloganEnLabel">英文 Slogan</span><input name="dealerSloganEn" placeholder="Trust is proven by what every car is willing to reveal."></label>
+          <label><span>Facebook URL</span><input name="facebookUrl" type="url" placeholder="https://facebook.com/..."></label>
+          <label><span>Instagram URL</span><input name="instagramUrl" type="url" placeholder="https://instagram.com/..."></label>
+          <label><span>老板每日摘要 Email</span><input name="ownerEmail" type="email" placeholder="owner@example.com"><small class="field-note">每天约上午9点发送待跟进、未分配询盘和今日预约；留空即关闭。</small></label>
+          <div class="connection-state" id="connectionState">DEMO · Local browser storage</div>
+          <button class="button" type="submit" data-i18n="saveSettings">保存设置</button>
+          <button class="ghost danger" id="resetDemoSettings" type="button" data-i18n="resetFull">重置完整 DEMO 资料</button>
+          <button class="ghost" id="logoutAdminSettings" type="button" data-i18n="logout">退出后台</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="staffDialog" class="edit-dialog"><button class="dialog-close" id="closeStaff" aria-label="关闭员工编辑">×</button><form id="staffForm"><h2 id="staffFormTitle">新增员工</h2><input name="id" type="hidden"><div class="form-grid"><label><span data-staff-label="name">姓名</span><input name="name" required></label><label><span data-staff-label="phone">电话</span><input name="phone" inputmode="tel"></label><label><span data-staff-label="email">Email</span><input name="email" type="email"></label><label><span data-staff-label="identity">IC / Passport</span><input name="identity"></label><label><span data-staff-label="role">职位</span><input name="role" placeholder="Sales Advisor"></label><label><span data-staff-label="startDate">入职日期</span><input name="startDate" type="date"></label><label class="full"><span data-staff-label="address">地址</span><input name="address"></label><label><span data-staff-label="emergencyContact">紧急联系人</span><input name="emergencyContact"></label><label><span data-staff-label="pin">个人登录 PIN</span><input name="pin" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required></label><label><span data-staff-label="status">状态</span><select name="status"><option value="active">在职</option><option value="inactive">离职</option></select></label><label><span data-staff-label="baseSalary">底薪（RM）</span><input name="baseSalary" type="number" min="0" step="0.01" required></label><label><span data-staff-label="allowance">每月津贴（RM）</span><input name="allowance" type="number" min="0" step="0.01" value="0"></label><label><span data-staff-label="deduction">每月扣款（RM）</span><input name="deduction" type="number" min="0" step="0.01" value="0"></label><label><span data-staff-label="commissionType">佣金计算方式</span><select name="commissionType"><option value="fixed">每辆固定金额</option><option value="percent">成交价百分比</option></select></label><label><span data-staff-label="commissionValue">佣金数值</span><input name="commissionValue" type="number" min="0" step="0.1" required placeholder="500 或 1.5"></label></div><div class="form-actions"><button type="button" class="ghost danger" id="deleteStaff">删除员工</button><button class="button" type="submit">保存员工</button></div></form></dialog>
+  <dialog id="leadDialog" class="edit-dialog"><button class="dialog-close" id="closeLeadDialog">×</button><form id="leadForm"><h2 id="leadFormTitle">新增询盘</h2><div class="form-grid"><label><span>客户姓名 / Name</span><input name="name" required></label><label><span>电话 / Contact</span><input name="contact" required></label><label><span>来源 / Source</span><select name="source"><option>Facebook</option><option>Instagram</option><option>WhatsApp</option><option>Walk-in</option><option>Phone</option><option>Website</option></select></label><label><span>目标车辆 / Vehicle</span><select name="carId" id="newLeadCar"></select></label><label><span>负责人 / Assigned</span><select name="assigned" id="newLeadStaff"></select></label><label><span>预算 / Budget</span><input name="budget" placeholder="RM50k–80k"></label><label><span>地区 / Area</span><input name="location"></label><label><span>需求 / Intention</span><select name="intent"><option value="Viewing">看车 / Viewing</option><option value="Test drive">试驾 / Test drive</option><option value="Loan">贷款 / Loan</option><option value="Price">价格 / Price</option></select></label><label class="full"><span>备注 / Note</span><textarea name="note" rows="3"></textarea></label></div><div class="form-actions"><button class="button" type="submit">保存询盘 / Save lead</button></div></form></dialog>
+
+  <dialog id="editDialog" class="edit-dialog"><button class="dialog-close" id="closeEdit">×</button><form id="carForm"><h2 id="formTitle">新增车辆</h2><input type="hidden" name="id"><div class="vehicle-id-line"><span>VEHICLE ID</span><strong id="vehicleIdPreview">自动产生</strong><small>格式：CAR-YYYYMMDD-001</small></div>
+    <div class="form-grid">
+      <label><span data-i18n="brandLabel">品牌</span><input name="brand" required placeholder="Toyota"></label>
+      <label><span data-i18n="modelLabel">型号</span><input name="model" required placeholder="Vios 1.5G"></label>
+      <label><span data-i18n="year">年份</span><input name="year" type="number" min="1990" max="2030" required></label>
+      <label><span data-i18n="priceRm">价格（RM）</span><input name="price" type="number" min="0" required></label>
+      <label><span data-i18n="mileage">里程（km）</span><input name="mileage" type="number" min="0" required></label>
+      <label><span data-i18n="status">状态</span><select name="status"><option value="available">在售 / Available</option><option value="hidden">隐藏 / Hidden</option><option value="sold">已售 / Sold</option></select></label>
+      <label><span data-i18n="vehicleOwner">负责销售员</span><select name="assignedStaffId" id="vehicleAssignedStaff"></select><small class="field-note" data-i18n="vehicleOwnerHelp">新询盘会自动分配给这名销售员</small></label>
+      <label><span data-i18n="accident">事故记录</span><select name="accident"><option value="none">无已知事故 / None known</option><option value="minor">轻微事故 / Minor</option><option value="major">重大事故 / Major</option><option value="unknown">未提供 / Not provided</option></select></label>
+      <label><span data-i18n="flood">水灾记录</span><select name="flood"><option value="none">无已知水灾 / None known</option><option value="yes">有 / Yes</option><option value="unknown">未提供 / Not provided</option></select></label>
+      <label><span data-i18n="fees">额外费用</span><input name="fees" placeholder="RM0 / Not provided"></label>
+      <label><span data-i18n="negotiation">议价方式</span><select name="negotiation"><option value="minimum">最低价 / Lowest price</option><option value="slightly">可小议 / Slightly negotiable</option><option value="welcome">欢迎议价 / Negotiable</option><option value="fixed">固定价格 / Fixed price</option></select></label>
+      <label><span data-i18n="minimumPrice">最低价格（RM）</span><input name="minimumPrice" type="number" min="0" placeholder="仅最低价时填写"></label>
+      <div class="full structured-field-note"><b>主要配备 / Equipment highlights</b><small>每行填写一项主要卖点，建议填写 3–6 项。</small></div>
+      <label class="full"><span>主要配备（中文）</span><textarea name="equipmentZh" rows="6" placeholder="360° 全景影像&#10;自适应巡航&#10;6 安全气囊"></textarea></label>
+      <label class="full"><span>Equipment highlights (English)</span><textarea name="equipmentEn" rows="6" placeholder="360-degree camera&#10;Adaptive cruise control&#10;6 airbags"></textarea></label>
+      <div class="full report-uploader"><div><span data-i18n="reportUpload">验车报告</span><small id="reportUploadState">直接上传 PDF 或图片（最多 8MB）</small></div><label class="upload-button">＋ <span data-i18n="uploadReport">选择报告</span><input id="reportUpload" type="file" accept="application/pdf,image/*" hidden></label><input name="reportUrl" type="hidden"><button class="ghost hidden" id="removeReport" type="button">移除报告</button></div>
+      <input name="photos" type="hidden" value="0">
+      <div class="full media-manager"><div class="media-head"><div><span data-i18n="gallery">车辆图片与车况标注</span><small data-i18n="galleryHelp">上传多张图片、调整顺序，并在每张图标记瑕疵</small></div><label class="upload-button">＋ <span data-i18n="uploadPhotos">上传图片</span><input id="photoUpload" type="file" accept="image/*" multiple hidden></label></div><div id="mediaList" class="media-list"></div></div>
+      <label class="full"><span data-i18n="notes">已知缺陷与说明</span><textarea name="notes" rows="3"></textarea></label>
+      <input name="report" type="checkbox" hidden>
+    </div>
+    <div class="form-actions"><button type="button" class="ghost danger" id="deleteCar" data-i18n="delete">删除</button><button class="button" type="submit" data-i18n="save">保存车辆</button></div>
+  </form></dialog>
+  <script src="config.js?v=20260812-6"></script>
+  <script src="data.js?v=20260812-6"></script>
+  <script src="admin.js?v=20260813-2"></script>
+</body>
+</html>
